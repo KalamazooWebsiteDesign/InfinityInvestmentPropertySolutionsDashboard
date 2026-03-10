@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-primary-50 text-primary-900;
+  }
+}
+
+@layer components {
+  /* ── KPI Card ───────────────────────────────────────────────── */
+  .kpi-card {
+    @apply bg-white rounded-xl border border-primary-200 p-5 flex flex-col gap-1 shadow-sm;
+  }
+
+  /* ── Status Badge ───────────────────────────────────────────── */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide;
+  }
+  .badge-active      { @apply bg-accent-100 text-accent-700; }
+  .badge-lead        { @apply bg-primary-100 text-primary-600; }
+  .badge-rehab       { @apply bg-amber-100 text-amber-700; }
+  .badge-completed   { @apply bg-accent-100 text-accent-800; }
+  .badge-sold        { @apply bg-primary-200 text-primary-700; }
+  .badge-archived    { @apply bg-primary-100 text-primary-400; }
+
+  /* ── Buttons ────────────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg
+           bg-accent-500 hover:bg-accent-600 text-white font-semibold
+           transition-colors duration-150 focus:outline-none focus:ring-2
+           focus:ring-accent-400 focus:ring-offset-2;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg
+           bg-white hover:bg-primary-50 text-primary-800 font-semibold
+           border border-primary-200 transition-colors duration-150
+           focus:outline-none focus:ring-2 focus:ring-primary-300 focus:ring-offset-2;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg
+           text-primary-500 hover:text-primary-800 hover:bg-primary-100
+           font-medium transition-colors duration-150;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg
+           text-red-600 hover:text-red-700 hover:bg-red-50
+           font-medium transition-colors duration-150;
+  }
+
+  /* ── Form inputs ────────────────────────────────────────────── */
+  .input {
+    @apply w-full px-3 py-2 rounded-lg border border-primary-200
+           bg-white text-primary-900 placeholder-primary-400
+           focus:outline-none focus:ring-2 focus:ring-accent-400 focus:border-transparent
+           transition duration-150 text-sm;
+  }
+  .textarea {
+    @apply w-full px-3 py-2 rounded-lg border border-primary-200
+           bg-white text-primary-900 placeholder-primary-400
+           focus:outline-none focus:ring-2 focus:ring-accent-400 focus:border-transparent
+           transition duration-150 text-sm resize-none;
+  }
+  .select {
+    @apply w-full px-3 py-2 rounded-lg border border-primary-200
+           bg-white text-primary-900
+           focus:outline-none focus:ring-2 focus:ring-accent-400 focus:border-transparent
+           transition duration-150 text-sm;
+  }
+  .label {
+    @apply block text-sm font-medium text-primary-700 mb-1;
+  }
+  .field {
+    @apply flex flex-col gap-1;
+  }
+
+  /* ── Section headings ───────────────────────────────────────── */
+  .section-title {
+    @apply text-xs font-semibold uppercase tracking-widest text-secondary-500 mb-4;
+  }
+}
+
+@layer utilities {
+  .money-green  { @apply text-accent-600 font-semibold; }
+  .money-large  { @apply text-2xl font-bold text-accent-600; }
+
+  /* Smooth scroll */
+  html { scroll-behavior: smooth; }
+
+  /* Hero gradient overlay */
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0.55) 0%,
+      rgba(15, 23, 42, 0.75) 60%,
+      rgba(15, 23, 42, 0.90) 100%
+    );
+  }
+}
