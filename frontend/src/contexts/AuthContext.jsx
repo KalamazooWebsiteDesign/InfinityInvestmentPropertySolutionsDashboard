@@ -9,24 +9,24 @@ export function AuthProvider({ children }) {
 
   // Verify token on mount
   useEffect(() => {
-    const token = localStorage.getItem('garcia_admin_token');
+    const token = localStorage.getItem('iips_admin_token');
     if (!token) { setLoading(false); return; }
 
     api.auth.me()
       .then(data => setAdmin(data.admin))
-      .catch(() => localStorage.removeItem('garcia_admin_token'))
+      .catch(() => localStorage.removeItem('iips_admin_token'))
       .finally(() => setLoading(false));
   }, []);
 
   const login = useCallback(async (email, password) => {
     const data = await api.auth.login(email, password);
-    localStorage.setItem('garcia_admin_token', data.token);
+    localStorage.setItem('iips_admin_token', data.token);
     setAdmin(data.admin);
     return data;
   }, []);
 
   const logout = useCallback(() => {
-    localStorage.removeItem('garcia_admin_token');
+    localStorage.removeItem('iips_admin_token');
     setAdmin(null);
   }, []);
 

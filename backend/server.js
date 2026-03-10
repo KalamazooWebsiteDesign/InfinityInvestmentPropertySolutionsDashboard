@@ -51,7 +51,7 @@ app.use((err, _req, res, _next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`\n🏠 Garcia Capital API running on http://localhost:${PORT}`);
+  console.log(`\n🏠 Infinity Investment Property Solutions API running on http://localhost:${PORT}`);
   console.log(`   Admin email:    ${process.env.ADMIN_EMAIL}`);
   console.log(`   Environment:    ${process.env.NODE_ENV || 'development'}\n`);
 });

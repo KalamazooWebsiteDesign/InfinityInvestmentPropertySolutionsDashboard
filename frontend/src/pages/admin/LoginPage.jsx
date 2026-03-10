@@ -41,9 +41,9 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-14 h-14 bg-accent-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-black text-xl">GC</span>
+            <span className="text-white font-black text-xl">II</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">Garcia Capital</h1>
+          <h1 className="text-2xl font-bold text-white">Infinity Investment Property Solutions</h1>
           <p className="text-primary-400 text-sm mt-1">Admin Dashboard</p>
         </div>
 
@@ -110,7 +110,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-primary-600 text-xs mt-6">
-          Garcia Capital — Private Use Only
+          Infinity Investment Property Solutions — Private Use Only
         </p>
       </div>
     </div>

@@ -292,7 +292,7 @@ export default function HomePage() {
               </div>
               <div className="absolute -bottom-4 -right-4 bg-accent-500 text-white rounded-xl px-5 py-3 shadow-lg">
                 <div className="font-bold text-xl">Isaac Garcia</div>
-                <div className="text-accent-100 text-sm">Founder, Garcia Capital</div>
+                <div className="text-accent-100 text-sm">Founder, Infinity Investment Property Solutions</div>
               </div>
             </div>
 
@@ -306,7 +306,7 @@ export default function HomePage() {
                 Isaac Garcia has spent years executing profitable real estate transactions in the Phoenix Metro — one of the most active real estate markets in the United States. His approach is grounded in conservative underwriting, trusted contractor relationships, and a commitment to protecting investor capital above all else.
               </p>
               <p className="text-primary-400 leading-relaxed mb-8">
-                Garcia Capital operates with a simple mission: identify strong opportunities, structure deals transparently, and deliver results. Every deal presented here has been personally sourced, analyzed, and approved by Isaac.
+                Infinity Investment Property Solutions operates with a simple mission: identify strong opportunities, structure deals transparently, and deliver results. Every deal presented here has been personally sourced, analyzed, and approved by Isaac.
               </p>
 
               <div className="grid grid-cols-2 gap-4">

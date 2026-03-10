@@ -48,10 +48,10 @@ export default function AdminLayout({ children, title, actions }) {
       {/* Logo */}
       <div className="flex items-center gap-3 px-4 py-5 border-b border-primary-800">
         <div className="w-8 h-8 bg-accent-500 rounded-lg flex items-center justify-center shrink-0">
-          <span className="text-white font-bold text-sm">GC</span>
+          <span className="text-white font-bold text-sm">II</span>
         </div>
         <div>
-          <div className="text-white font-bold text-sm leading-none">Garcia Capital</div>
+          <div className="text-white font-bold text-sm leading-none">Infinity Investment Property Solutions</div>
           <div className="text-primary-500 text-xs leading-none mt-0.5">Admin Panel</div>
         </div>
       </div>

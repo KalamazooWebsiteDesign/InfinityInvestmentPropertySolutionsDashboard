@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn } from 'lucide-react';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -22,11 +22,11 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group" onClick={() => setOpen(false)}>
             <div className="w-8 h-8 bg-accent-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">GC</span>
+              <span className="text-white font-bold text-sm">II</span>
             </div>
             <div>
-              <div className="text-white font-bold text-sm leading-none">Garcia Capital</div>
-              <div className="text-primary-400 text-xs leading-none">Private Real Estate</div>
+              <div className="text-white font-bold text-sm leading-none">Infinity Investment</div>
+              <div className="text-primary-400 text-xs leading-none">Property Solutions</div>
             </div>
           </Link>
 
@@ -41,6 +41,10 @@ export default function Navbar() {
             <button onClick={() => scrollTo('about')} className="text-primary-300 hover:text-white text-sm font-medium transition-colors">
               About Isaac
             </button>
+            <Link to="/login" className="flex items-center gap-1.5 text-primary-300 hover:text-white text-sm font-medium transition-colors border border-primary-600 hover:border-primary-400 rounded-lg px-3 py-2">
+              <LogIn size={15} />
+              Login
+            </Link>
             <button onClick={() => scrollTo('join')} className="btn-primary text-sm py-2 px-4">
               Join Investor List
             </button>
@@ -68,6 +72,10 @@ export default function Navbar() {
             <button onClick={() => scrollTo('about')} className="text-primary-300 hover:text-white text-sm font-medium text-left transition-colors">
               About Isaac
             </button>
+            <Link to="/login" onClick={() => setOpen(false)} className="flex items-center gap-2 text-primary-300 hover:text-white text-sm font-medium transition-colors">
+              <LogIn size={15} />
+              Login
+            </Link>
             <button onClick={() => scrollTo('join')} className="btn-primary text-sm py-2">
               Join Investor List
             </button>

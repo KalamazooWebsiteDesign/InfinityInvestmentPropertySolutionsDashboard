@@ -1,7 +1,7 @@
 const BASE = '/api/v1';
 
 function getToken() {
-  return localStorage.getItem('garcia_admin_token');
+  return localStorage.getItem('iips_admin_token');
 }
 
 async function request(method, path, body, isAdmin = false) {

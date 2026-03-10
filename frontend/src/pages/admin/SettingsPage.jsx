@@ -62,7 +62,7 @@ export default function SettingsPage() {
             </div>
           </div>
           <div className="text-xs text-primary-400 bg-primary-50 rounded-lg px-4 py-3 border border-primary-100">
-            This is the admin account for Garcia Capital. Only authorized users should have access.
+            This is the admin account for Infinity Investment Property Solutions. Only authorized users should have access.
           </div>
         </div>
 

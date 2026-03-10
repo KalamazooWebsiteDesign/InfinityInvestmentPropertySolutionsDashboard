@@ -9,9 +9,9 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-7 h-7 bg-accent-500 rounded-md flex items-center justify-center">
-                <span className="text-white font-bold text-xs">GC</span>
+                <span className="text-white font-bold text-xs">II</span>
               </div>
-              <span className="text-white font-bold text-sm">Garcia Capital</span>
+              <span className="text-white font-bold text-sm">Infinity Investment Property Solutions</span>
             </div>
             <p className="text-primary-500 text-xs max-w-xs">
               Private real estate investment opportunities in the Phoenix Metro. For accredited and qualified investors only.
@@ -35,7 +35,7 @@ export default function Footer() {
 
         <div className="border-t border-primary-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-primary-600 text-xs">
-            © {new Date().getFullYear()} Garcia Capital. All rights reserved.
+            © {new Date().getFullYear()} Infinity Investment Property Solutions. All rights reserved.
           </p>
           <p className="text-primary-700 text-xs text-center">
             Investment opportunities are for informational purposes only and do not constitute an offer to sell or solicitation of an offer to buy any security.
