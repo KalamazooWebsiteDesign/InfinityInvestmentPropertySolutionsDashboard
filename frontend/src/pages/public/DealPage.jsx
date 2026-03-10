@@ -420,9 +420,9 @@ export default function DealPage() {
             <ArrowLeft size={14} />
             All Opportunities
           </Link>
-          <a href="mailto:isaac@garciacapital.com" className="flex items-center gap-2 hover:text-accent-600 transition-colors">
+          <a href="mailto:isaac@infinityips.com" className="flex items-center gap-2 hover:text-accent-600 transition-colors">
             <Mail size={14} />
-            isaac@garciacapital.com
+            isaac@infinityips.com
           </a>
         </div>
       </div>

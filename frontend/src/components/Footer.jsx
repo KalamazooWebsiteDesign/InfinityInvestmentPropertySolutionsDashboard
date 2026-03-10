@@ -27,7 +27,7 @@ export default function Footer() {
             </div>
             <div className="flex flex-col gap-2">
               <span className="text-primary-300 font-semibold text-xs uppercase tracking-wide">Contact</span>
-              <a href="mailto:isaac@garciacapital.com" className="hover:text-white transition-colors">isaac@garciacapital.com</a>
+              <a href="mailto:isaac@infinityips.com" className="hover:text-white transition-colors">isaac@infinityips.com</a>
               <a href="tel:+16025550100" className="hover:text-white transition-colors">(602) 555-0100</a>
             </div>
           </div>

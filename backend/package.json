@@ -1,5 +1,5 @@
 {
-  "name": "garcia-capital-backend",
+  "name": "iips-backend",
   "version": "1.0.0",
   "scripts": {
     "start": "node --experimental-sqlite server.js",

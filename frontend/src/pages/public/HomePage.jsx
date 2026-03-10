@@ -347,9 +347,9 @@ export default function HomePage() {
           <div className="mt-8 text-center text-sm text-primary-400">
             <p>Or reach out directly:</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-3">
-              <a href="mailto:isaac@garciacapital.com" className="flex items-center gap-2 text-primary-600 hover:text-accent-600 font-medium transition-colors">
+              <a href="mailto:isaac@infinityips.com" className="flex items-center gap-2 text-primary-600 hover:text-accent-600 font-medium transition-colors">
                 <Mail size={16} />
-                isaac@garciacapital.com
+                isaac@infinityips.com
               </a>
               <a href="tel:+16025550100" className="flex items-center gap-2 text-primary-600 hover:text-accent-600 font-medium transition-colors">
                 <Phone size={16} />
