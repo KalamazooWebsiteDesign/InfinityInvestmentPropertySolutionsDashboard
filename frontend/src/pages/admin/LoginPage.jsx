@@ -64,7 +64,7 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
-                placeholder="admin@infinityips.com"
+                placeholder="Email address"
                 required
                 autoFocus
                 autoComplete="email"

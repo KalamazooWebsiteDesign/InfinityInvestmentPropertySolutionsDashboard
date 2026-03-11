@@ -78,52 +78,6 @@ router.delete('/:id', requireAdmin, (req, res) => {
   res.json({ message: 'Investor deleted' });
 });
 
-// ─── ADMIN: deal assignment ───────────────────────────────────────────────────
-
-// GET /api/v1/investors/:id/deals  — deals assigned to an investor
-router.get('/:id/deals', requireAdmin, (req, res) => {
-  const investor = db.prepare('SELECT id, name, email FROM investors WHERE id = ?').get(req.params.id);
-  if (!investor) return res.status(404).json({ error: 'Investor not found' });
-
-  const deals = db.prepare(`
-    SELECT d.id, d.slug, d.title, d.status, d.is_published,
-           d.investor_capital_required, d.projected_investor_return,
-           d.cover_image, id2.assigned_at
-    FROM deals d
-    JOIN investor_deals id2 ON id2.deal_id = d.id
-    WHERE id2.investor_id = ?
-    ORDER BY id2.assigned_at DESC
-  `).all(req.params.id);
-
-  res.json({ investor, deals });
-});
-
-// POST /api/v1/investors/:id/deals  — assign a deal to investor
-router.post('/:id/deals', requireAdmin, (req, res) => {
-  const { deal_id } = req.body;
-  if (!deal_id) return res.status(400).json({ error: 'deal_id is required' });
-
-  const investor = db.prepare('SELECT id FROM investors WHERE id = ?').get(req.params.id);
-  if (!investor) return res.status(404).json({ error: 'Investor not found' });
-
-  const deal = db.prepare('SELECT id FROM deals WHERE id = ?').get(deal_id);
-  if (!deal) return res.status(404).json({ error: 'Deal not found' });
-
-  const existing = db.prepare('SELECT 1 FROM investor_deals WHERE investor_id = ? AND deal_id = ?')
-    .get(req.params.id, deal_id);
-  if (existing) return res.status(409).json({ error: 'Deal already assigned to this investor' });
-
-  db.prepare('INSERT INTO investor_deals (investor_id, deal_id) VALUES (?, ?)').run(req.params.id, deal_id);
-  res.status(201).json({ message: 'Deal assigned' });
-});
-
-// DELETE /api/v1/investors/:id/deals/:dealId  — unassign a deal
-router.delete('/:id/deals/:dealId', requireAdmin, (req, res) => {
-  db.prepare('DELETE FROM investor_deals WHERE investor_id = ? AND deal_id = ?')
-    .run(req.params.id, req.params.dealId);
-  res.json({ message: 'Deal unassigned' });
-});
-
 // ─── INVESTOR: my deals ───────────────────────────────────────────────────────
 
 // GET /api/v1/investors/me/deals  — investor's own deal list
@@ -169,6 +123,52 @@ router.get('/me/deals/:slug', requireInvestor, (req, res) => {
     deal_highlights: deal.deal_highlights  ? JSON.parse(deal.deal_highlights)  : [],
     timeline_details: deal.timeline_details ? JSON.parse(deal.timeline_details) : [],
   });
+});
+
+// ─── ADMIN: deal assignment ───────────────────────────────────────────────────
+
+// GET /api/v1/investors/:id/deals  — deals assigned to an investor
+router.get('/:id/deals', requireAdmin, (req, res) => {
+  const investor = db.prepare('SELECT id, name, email FROM investors WHERE id = ?').get(req.params.id);
+  if (!investor) return res.status(404).json({ error: 'Investor not found' });
+
+  const deals = db.prepare(`
+    SELECT d.id, d.slug, d.title, d.status, d.is_published,
+           d.investor_capital_required, d.projected_investor_return,
+           d.cover_image, id2.assigned_at
+    FROM deals d
+    JOIN investor_deals id2 ON id2.deal_id = d.id
+    WHERE id2.investor_id = ?
+    ORDER BY id2.assigned_at DESC
+  `).all(req.params.id);
+
+  res.json({ investor, deals });
+});
+
+// POST /api/v1/investors/:id/deals  — assign a deal to investor
+router.post('/:id/deals', requireAdmin, (req, res) => {
+  const { deal_id } = req.body;
+  if (!deal_id) return res.status(400).json({ error: 'deal_id is required' });
+
+  const investor = db.prepare('SELECT id FROM investors WHERE id = ?').get(req.params.id);
+  if (!investor) return res.status(404).json({ error: 'Investor not found' });
+
+  const deal = db.prepare('SELECT id FROM deals WHERE id = ?').get(deal_id);
+  if (!deal) return res.status(404).json({ error: 'Deal not found' });
+
+  const existing = db.prepare('SELECT 1 FROM investor_deals WHERE investor_id = ? AND deal_id = ?')
+    .get(req.params.id, deal_id);
+  if (existing) return res.status(409).json({ error: 'Deal already assigned to this investor' });
+
+  db.prepare('INSERT INTO investor_deals (investor_id, deal_id) VALUES (?, ?)').run(req.params.id, deal_id);
+  res.status(201).json({ message: 'Deal assigned' });
+});
+
+// DELETE /api/v1/investors/:id/deals/:dealId  — unassign a deal
+router.delete('/:id/deals/:dealId', requireAdmin, (req, res) => {
+  db.prepare('DELETE FROM investor_deals WHERE investor_id = ? AND deal_id = ?')
+    .run(req.params.id, req.params.dealId);
+  res.json({ message: 'Deal unassigned' });
 });
 
 module.exports = router;
