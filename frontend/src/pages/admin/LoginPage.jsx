@@ -20,8 +20,10 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     try {
-      await login(email, password);
-      navigate(from, { replace: true });
+      const data = await login(email, password);
+      // Redirect based on role; respect the original destination if it makes sense
+      const defaultDest = data.role === 'investor' ? '/investor' : '/admin';
+      navigate(from !== '/admin' ? from : defaultDest, { replace: true });
     } catch (err) {
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
@@ -44,7 +46,7 @@ export default function LoginPage() {
             <span className="text-white font-black text-xl">II</span>
           </div>
           <h1 className="text-2xl font-bold text-white">Infinity Investment Property Solutions</h1>
-          <p className="text-primary-400 text-sm mt-1">Admin Dashboard</p>
+          <p className="text-primary-400 text-sm mt-1">Secure Portal</p>
         </div>
 
         {/* Card */}

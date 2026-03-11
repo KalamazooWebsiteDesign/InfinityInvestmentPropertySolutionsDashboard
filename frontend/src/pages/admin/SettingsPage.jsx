@@ -6,7 +6,7 @@ import { Eye, EyeOff, CheckCircle, Shield, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function SettingsPage() {
-  const { admin, logout } = useAuth();
+  const { user: admin, logout } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });

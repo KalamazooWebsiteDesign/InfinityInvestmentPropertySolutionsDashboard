@@ -67,6 +67,23 @@ db.exec(`
     message    TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
+
+  CREATE TABLE IF NOT EXISTS investors (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    name          TEXT    NOT NULL,
+    email         TEXT    UNIQUE NOT NULL,
+    password_hash TEXT    NOT NULL,
+    created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+  CREATE TABLE IF NOT EXISTS investor_deals (
+    investor_id  INTEGER NOT NULL,
+    deal_id      INTEGER NOT NULL,
+    assigned_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (investor_id, deal_id),
+    FOREIGN KEY (investor_id) REFERENCES investors(id) ON DELETE CASCADE,
+    FOREIGN KEY (deal_id)     REFERENCES deals(id)     ON DELETE CASCADE
+  );
 `);
 
 // ─── Seed admin ───────────────────────────────────────────────────────────────

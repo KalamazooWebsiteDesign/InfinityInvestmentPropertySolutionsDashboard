@@ -8,52 +8,76 @@ import DealPage   from './pages/public/DealPage';
 import NotFound   from './pages/public/NotFound';
 
 // Admin pages
-import LoginPage      from './pages/admin/LoginPage';
-import DashboardPage  from './pages/admin/DashboardPage';
-import DealsListPage  from './pages/admin/DealsListPage';
-import DealEditorPage from './pages/admin/DealEditorPage';
-import SettingsPage   from './pages/admin/SettingsPage';
+import LoginPage        from './pages/admin/LoginPage';
+import DashboardPage    from './pages/admin/DashboardPage';
+import DealsListPage    from './pages/admin/DealsListPage';
+import DealEditorPage   from './pages/admin/DealEditorPage';
+import SettingsPage     from './pages/admin/SettingsPage';
+import InvestorsPage    from './pages/admin/InvestorsPage';
 
-function ProtectedRoute({ children }) {
-  const { isAuthenticated, loading } = useAuth();
+// Investor pages
+import InvestorDashboardPage from './pages/investor/InvestorDashboardPage';
+import InvestorDealPage      from './pages/investor/InvestorDealPage';
+
+// ── Route guards ──────────────────────────────────────────────────────────────
+function RequireAdmin({ children }) {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
   const location = useLocation();
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-primary-900 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-accent-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
+  if (loading) return <Spinner />;
+  if (!isAuthenticated) return <Navigate to="/login" state={{ from: location }} replace />;
+  if (!isAdmin)         return <Navigate to="/investor" replace />;
   return children;
 }
 
+function RequireInvestor({ children }) {
+  const { isAuthenticated, isInvestor, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) return <Spinner />;
+  if (!isAuthenticated) return <Navigate to="/login" state={{ from: location }} replace />;
+  if (!isInvestor)      return <Navigate to="/admin" replace />;
+  return children;
+}
+
+function Spinner() {
+  return (
+    <div className="min-h-screen bg-primary-900 flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-accent-500 border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
+
 function AppRoutes() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isAdmin, isInvestor } = useAuth();
 
   return (
     <Routes>
       {/* ── Public ────────────────────────────────────────────── */}
-      <Route path="/"              element={<HomePage />} />
-      <Route path="/deals/:slug"   element={<DealPage />} />
+      <Route path="/"            element={<HomePage />} />
+      <Route path="/deals/:slug" element={<DealPage />} />
 
       {/* ── Auth ──────────────────────────────────────────────── */}
       <Route
         path="/login"
-        element={isAuthenticated ? <Navigate to="/admin" replace /> : <LoginPage />}
+        element={
+          isAuthenticated
+            ? <Navigate to={isAdmin ? '/admin' : '/investor'} replace />
+            : <LoginPage />
+        }
       />
 
-      {/* ── Admin (protected) ─────────────────────────────────── */}
-      <Route path="/admin" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-      <Route path="/admin/deals" element={<ProtectedRoute><DealsListPage /></ProtectedRoute>} />
-      <Route path="/admin/deals/new" element={<ProtectedRoute><DealEditorPage /></ProtectedRoute>} />
-      <Route path="/admin/deals/:id/edit" element={<ProtectedRoute><DealEditorPage /></ProtectedRoute>} />
-      <Route path="/admin/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+      {/* ── Admin (protected, admin role only) ────────────────── */}
+      <Route path="/admin"                   element={<RequireAdmin><DashboardPage /></RequireAdmin>} />
+      <Route path="/admin/deals"             element={<RequireAdmin><DealsListPage /></RequireAdmin>} />
+      <Route path="/admin/deals/new"         element={<RequireAdmin><DealEditorPage /></RequireAdmin>} />
+      <Route path="/admin/deals/:id/edit"    element={<RequireAdmin><DealEditorPage /></RequireAdmin>} />
+      <Route path="/admin/investors"         element={<RequireAdmin><InvestorsPage /></RequireAdmin>} />
+      <Route path="/admin/settings"          element={<RequireAdmin><SettingsPage /></RequireAdmin>} />
+
+      {/* ── Investor portal (protected, investor role only) ────── */}
+      <Route path="/investor"                element={<RequireInvestor><InvestorDashboardPage /></RequireInvestor>} />
+      <Route path="/investor/deals/:slug"    element={<RequireInvestor><InvestorDealPage /></RequireInvestor>} />
 
       {/* ── 404 ───────────────────────────────────────────────── */}
       <Route path="*" element={<NotFound />} />

@@ -4,34 +4,48 @@ import { api } from '../lib/api';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [admin, setAdmin]     = useState(null);
+  const [user, setUser]     = useState(null);   // { id, email, name? }
+  const [role, setRole]     = useState(null);   // 'admin' | 'investor' | null
   const [loading, setLoading] = useState(true);
 
-  // Verify token on mount
   useEffect(() => {
-    const token = localStorage.getItem('iips_admin_token');
+    const token = localStorage.getItem('iips_token');
     if (!token) { setLoading(false); return; }
 
     api.auth.me()
-      .then(data => setAdmin(data.admin))
-      .catch(() => localStorage.removeItem('iips_admin_token'))
+      .then(data => {
+        setUser(data.user);
+        setRole(data.role);
+      })
+      .catch(() => localStorage.removeItem('iips_token'))
       .finally(() => setLoading(false));
   }, []);
 
   const login = useCallback(async (email, password) => {
     const data = await api.auth.login(email, password);
-    localStorage.setItem('iips_admin_token', data.token);
-    setAdmin(data.admin);
+    localStorage.setItem('iips_token', data.token);
+    setUser(data.user);
+    setRole(data.role);
     return data;
   }, []);
 
   const logout = useCallback(() => {
-    localStorage.removeItem('iips_admin_token');
-    setAdmin(null);
+    localStorage.removeItem('iips_token');
+    setUser(null);
+    setRole(null);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ admin, loading, login, logout, isAuthenticated: !!admin }}>
+    <AuthContext.Provider value={{
+      user,
+      role,
+      loading,
+      login,
+      logout,
+      isAuthenticated: !!user,
+      isAdmin:     role === 'admin',
+      isInvestor:  role === 'investor',
+    }}>
       {children}
     </AuthContext.Provider>
   );

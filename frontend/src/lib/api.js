@@ -1,7 +1,7 @@
 const BASE = '/api/v1';
 
 function getToken() {
-  return localStorage.getItem('iips_admin_token');
+  return localStorage.getItem('iips_token');
 }
 
 async function request(method, path, body, isAdmin = false) {
@@ -28,6 +28,20 @@ export const api = {
     me:             ()                => request('GET',  '/auth/me'),
     changePassword: (currentPassword, newPassword) =>
                     request('POST', '/auth/change-password', { currentPassword, newPassword }),
+  },
+
+  // ── Investors (admin management + investor self) ─────────────────────────
+  investors: {
+    list:           ()              => request('GET',    '/investors'),
+    create:         (data)          => request('POST',   '/investors', data),
+    update:         (id, data)      => request('PUT',    `/investors/${id}`, data),
+    remove:         (id)            => request('DELETE', `/investors/${id}`),
+    getDeals:       (id)            => request('GET',    `/investors/${id}/deals`),
+    assignDeal:     (id, deal_id)   => request('POST',   `/investors/${id}/deals`, { deal_id }),
+    unassignDeal:   (id, dealId)    => request('DELETE', `/investors/${id}/deals/${dealId}`),
+    // Investor self-service
+    myDeals:        ()              => request('GET',    '/investors/me/deals'),
+    myDeal:         (slug)          => request('GET',    `/investors/me/deals/${slug}`),
   },
 
   // ── Public deals ────────────────────────────────────────────────────────────

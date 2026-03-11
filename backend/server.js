@@ -7,9 +7,10 @@ const fs      = require('fs');
 // Init DB (runs migrations + seeding)
 require('./db');
 
-const authRoutes  = require('./routes/auth');
-const dealRoutes  = require('./routes/deals');
-const leadRoutes  = require('./routes/leads');
+const authRoutes      = require('./routes/auth');
+const dealRoutes      = require('./routes/deals');
+const leadRoutes      = require('./routes/leads');
+const investorRoutes  = require('./routes/investors');
 
 const app  = express();
 const PORT = process.env.PORT || 3001;
@@ -30,9 +31,10 @@ if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 app.use('/uploads', express.static(uploadsDir));
 
 // ─── API Routes ────────────────────────────────────────────────────────────────
-app.use('/api/v1/auth',  authRoutes);
-app.use('/api/v1/deals', dealRoutes);
-app.use('/api/v1/leads', leadRoutes);
+app.use('/api/v1/auth',      authRoutes);
+app.use('/api/v1/deals',     dealRoutes);
+app.use('/api/v1/leads',     leadRoutes);
+app.use('/api/v1/investors', investorRoutes);
 
 // ─── Health check ──────────────────────────────────────────────────────────────
 app.get('/api/v1/health', (_req, res) => res.json({ status: 'ok', ts: new Date().toISOString() }));

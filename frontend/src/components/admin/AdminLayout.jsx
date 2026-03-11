@@ -3,13 +3,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard, FileText, Plus, Settings, LogOut,
-  Menu, X, ChevronRight, Home, ExternalLink
+  Menu, X, ChevronRight, Home, ExternalLink, Users
 } from 'lucide-react';
 
 const navItems = [
-  { to: '/admin',        icon: LayoutDashboard, label: 'Dashboard', exact: true },
-  { to: '/admin/deals',  icon: FileText,         label: 'Deals' },
-  { to: '/admin/settings', icon: Settings,       label: 'Settings' },
+  { to: '/admin',            icon: LayoutDashboard, label: 'Dashboard', exact: true },
+  { to: '/admin/deals',      icon: FileText,         label: 'Deals' },
+  { to: '/admin/investors',  icon: Users,            label: 'Investors' },
+  { to: '/admin/settings',   icon: Settings,         label: 'Settings' },
 ];
 
 function NavItem({ to, icon: Icon, label, exact, onClick }) {
@@ -34,7 +35,7 @@ function NavItem({ to, icon: Icon, label, exact, onClick }) {
 }
 
 export default function AdminLayout({ children, title, actions }) {
-  const { admin, logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -87,7 +88,7 @@ export default function AdminLayout({ children, title, actions }) {
       <div className="border-t border-primary-800 px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="min-w-0">
-            <div className="text-white text-xs font-medium truncate">{admin?.email}</div>
+            <div className="text-white text-xs font-medium truncate">{user?.email}</div>
             <div className="text-primary-500 text-xs">Administrator</div>
           </div>
           <button
