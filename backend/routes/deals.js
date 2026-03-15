@@ -67,16 +67,6 @@ router.get('/stats', (_req, res) => {
   res.json({ total, active, completed, totalProjectedProfit: profitRow.total || 0 });
 });
 
-// GET /api/v1/deals/:slug  (single deal by slug — public if published)
-router.get('/:slug', (req, res) => {
-  const adminMode = req.headers['x-admin'] === 'true';
-  const deal = db.prepare('SELECT * FROM deals WHERE slug = ?').get(req.params.slug);
-  if (!deal) return res.status(404).json({ error: 'Deal not found' });
-  if (!adminMode && !deal.is_published)
-    return res.status(404).json({ error: 'Deal not found' });
-  res.json(parseDeal(deal));
-});
-
 // ─── ADMIN routes (protected) ─────────────────────────────────────────────────
 
 // GET /api/v1/deals/admin/all
@@ -95,6 +85,18 @@ router.get('/admin/dashboard-stats', requireAuth, (_req, res) => {
   const leads     = db.prepare("SELECT COUNT(*) as n FROM leads").get().n;
   const recent    = db.prepare("SELECT id, slug, title, status, is_published, updated_at FROM deals ORDER BY updated_at DESC LIMIT 5").all();
   res.json({ active, completed, sold, totalProfit, totalCapital, leads, recent });
+});
+
+// GET /api/v1/deals/:slug  (single deal by slug — public if published)
+// NOTE: must be defined AFTER /admin/all and /admin/dashboard-stats to avoid
+// Express matching "admin" as a :slug parameter.
+router.get('/:slug', (req, res) => {
+  const adminMode = req.headers['x-admin'] === 'true';
+  const deal = db.prepare('SELECT * FROM deals WHERE slug = ?').get(req.params.slug);
+  if (!deal) return res.status(404).json({ error: 'Deal not found' });
+  if (!adminMode && !deal.is_published)
+    return res.status(404).json({ error: 'Deal not found' });
+  res.json(parseDeal(deal));
 });
 
 // POST /api/v1/deals  (create)
