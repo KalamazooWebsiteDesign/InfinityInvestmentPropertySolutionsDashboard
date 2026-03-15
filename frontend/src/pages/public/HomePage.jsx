@@ -285,9 +285,9 @@ export default function HomePage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-2xl overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1560250097-0dc05329d0ea?w=800&q=80"
+                  src="/isaac-garcia.jpg"
                   alt="Isaac Garcia"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="absolute -bottom-4 -right-4 bg-accent-500 text-white rounded-xl px-5 py-3 shadow-lg">
