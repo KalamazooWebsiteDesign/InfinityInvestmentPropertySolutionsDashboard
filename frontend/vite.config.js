@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: '../',       // Output directly to project root = public_html on server
+    emptyOutDir: false,  // Don't wipe backend/, frontend/, etc.
+  },
   server: {
     port: 3000,
     proxy: {
