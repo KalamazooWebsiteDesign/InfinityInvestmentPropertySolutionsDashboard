@@ -21,6 +21,17 @@ async function request(method, path, body, isAdmin = false) {
   return data;
 }
 
+function asArray(value) {
+  if (Array.isArray(value)) return value;
+  if (value && typeof value === 'object') {
+    const candidates = ['data', 'items', 'results', 'rows', 'deals', 'investors'];
+    for (const key of candidates) {
+      if (Array.isArray(value[key])) return value[key];
+    }
+  }
+  return [];
+}
+
 // ── Auth ──────────────────────────────────────────────────────────────────────
 export const api = {
   auth: {
@@ -32,7 +43,7 @@ export const api = {
 
   // ── Investors (admin management + investor self) ─────────────────────────
   investors: {
-    list:           ()              => request('GET',    '/investors'),
+    list:           ()              => request('GET',    '/investors').then(asArray),
     create:         (data)          => request('POST',   '/investors', data),
     update:         (id, data)      => request('PUT',    `/investors/${id}`, data),
     remove:         (id)            => request('DELETE', `/investors/${id}`),
@@ -40,18 +51,18 @@ export const api = {
     assignDeal:     (id, deal_id)   => request('POST',   `/investors/${id}/deals`, { deal_id }),
     unassignDeal:   (id, dealId)    => request('DELETE', `/investors/${id}/deals/${dealId}`),
     // Investor self-service
-    myDeals:        ()              => request('GET',    '/investors/me/deals'),
+    myDeals:        ()              => request('GET',    '/investors/me/deals').then(asArray),
     myDeal:         (slug)          => request('GET',    `/investors/me/deals/${slug}`),
   },
 
   // ── Public deals ────────────────────────────────────────────────────────────
   deals: {
-    list:       ()     => request('GET', '/deals'),
+    list:       ()     => request('GET', '/deals').then(asArray),
     stats:      ()     => request('GET', '/deals/stats'),
     getBySlug:  (slug) => request('GET', `/deals/${slug}`),
 
     // ── Admin deals ──────────────────────────────────────────────────────────
-    adminList:    ()     => request('GET',    '/deals/admin/all'),
+    adminList:    ()     => request('GET',    '/deals/admin/all').then(asArray),
     dashStats:    ()     => request('GET',    '/deals/admin/dashboard-stats'),
     create:       (data) => request('POST',   '/deals', data),
     update:       (id, data) => request('PUT', `/deals/${id}`, data),
@@ -78,7 +89,7 @@ export const api = {
   // ── Leads ────────────────────────────────────────────────────────────────────
   leads: {
     submit:  (data)  => request('POST', '/leads', data),
-    list:    ()      => request('GET',  '/leads'),
+    list:    ()      => request('GET',  '/leads').then(asArray),
     byDeal:  (slug)  => request('GET',  `/leads/deal/${slug}`),
   },
 };
