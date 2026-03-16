@@ -9,6 +9,9 @@ foreach ($_SERVER as $k => $v) {
         if ($name !== "HOST") $h[] = $name . ": " . $v;
     }
 }
+// PHP stores Content-Type and Content-Length without HTTP_ prefix — add them manually
+if (!empty($_SERVER['CONTENT_TYPE']))   $h[] = "Content-Type: "   . $_SERVER['CONTENT_TYPE'];
+if (!empty($_SERVER['CONTENT_LENGTH'])) $h[] = "Content-Length: " . $_SERVER['CONTENT_LENGTH'];
 curl_setopt_array($ch, [
     CURLOPT_HTTPHEADER     => $h,
     CURLOPT_RETURNTRANSFER => true,
